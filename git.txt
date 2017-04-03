@@ -1,0 +1,9 @@
+
+git init
+git add .
+git commit -m "first commit"
+git tag v1
+git remote add origin https://github.com/lxx19901019/APP_0004_Binder_CPP_App.git
+git remote add origin git@github.com:lxx19901019/APP_0004_Binder_CPP_App.git
+git push -u origin master
+git push origin --tags

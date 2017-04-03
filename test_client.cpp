@@ -1,4 +1,6 @@
 
+#define LOG_TAG "helloserver"
+
 /*参考：frameworks\av\mediaserver\Main_mediaserver.cpp*/
 
 #include <fcntl.h>
@@ -9,16 +11,20 @@
 #include <binder/IServiceManager.h>
 #include <cutils/properties.h>
 #include <utils/Log.h>
-#include "RegisterExtensions.h"
 
-#define LOG_TAG "helloserver"
+
+#include "IHelloService.h"
+
+
+
+using namespace android;
 
 /**
   * ./test_client hello
   *  ./test_client hello some
   */
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	int cnt = 0;
 	if(argc < 2) {

@@ -11,7 +11,8 @@
 #include <utils/String8.h>
 #include <binder/IInterface.h>
 #include <binder/Parcel.h>
-#include <system/audio.h>
+
+
 #define HELLO_SVR_CMD_SAYHELLO       0
 #define HELLO_SVR_CMD_SAYHELLO_TO 1
 
@@ -26,18 +27,18 @@ class IHelloService: public IInterface
     	DECLARE_META_INTERFACE(HelloService);
 		virtual void sayhello(void) = 0;
 		virtual int sayhello_to(const char *name) = 0;
-}
+};
 
 
 class BnHelloService: public BnInterface<IHelloService>
 {
 public:
-    virtual status_t    onTransact( uint32_t code,
+    status_t    onTransact( uint32_t code,
                                     const Parcel& data,
                                     Parcel* reply,
                                     uint32_t flags = 0);
-	virtual void sayhello(void) = 0;
-	virtual int sayhello_to(const char *name) = 0;
+	void sayhello(void) ;
+	int sayhello_to(const char *name) ;
 };
 
 }

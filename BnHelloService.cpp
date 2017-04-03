@@ -1,7 +1,8 @@
 
+#define LOG_TAG "HelloService"
 
 #include "IHelloService.h"
-#define LOG_TAG "HelloService"
+
 /*参考：frameworks\av\libmedia\IMediaPlayerService.cpp*/
 
 
@@ -9,12 +10,12 @@ namespace android {
 	status_t    BnHelloService::onTransact( uint32_t code,
                                     const Parcel& data,
                                     Parcel* reply,
-                                    uint32_t flags = 0)
+                                    uint32_t flags)
 	{
 		/*解析数据 ,调用sayhello/sayhello_to*/
 	    switch (code) {
 	        case HELLO_SVR_CMD_SAYHELLO: {
-				sayhello(void);
+				sayhello();
 	            return NO_ERROR;
 	        } break;
 			

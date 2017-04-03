@@ -2,7 +2,8 @@
 /*参考：frameworks\av\mediaserver\Main_mediaserver.cpp*/
 
 
-#define LOG_TAG "helloserver"
+#define LOG_TAG "HelloService"
+
 //#define LOG_NDEBUG 0
 
 #include <fcntl.h>
@@ -13,10 +14,13 @@
 #include <binder/IServiceManager.h>
 #include <cutils/properties.h>
 #include <utils/Log.h>
-#include "RegisterExtensions.h"
 
 
-void main(void)
+#include "IHelloService.h"
+
+using namespace android;
+
+int main(void)
 {
 	/* add service*/
 
@@ -26,10 +30,11 @@ void main(void)
 	/*获得BpServiceManager*/
     sp<IServiceManager> sm = defaultServiceManager();
     ALOGI("ServiceManager: %p", sm.get());
- 	sm->addServie(String16("hello"), new BnHelloService());
+ 	sm->addService(String16("hello"), new BnHelloService());
 
 	/*循环体*/
     ProcessState::self()->startThreadPool();
     IPCThreadState::self()->joinThreadPool();
+	return 0;
 }
 
