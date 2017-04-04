@@ -1,5 +1,5 @@
 
-#define LOG_TAG "helloserver"
+#define LOG_TAG "TestService"
 
 /*参考：frameworks\av\mediaserver\Main_mediaserver.cpp*/
 
@@ -14,7 +14,7 @@
 
 
 #include "IHelloService.h"
-
+#include "IGoodByeService.h"
 
 
 using namespace android;
@@ -39,26 +39,47 @@ int main(int argc, char **argv)
 	sp<ProcessState> proc(ProcessState::self());
 	/*获得BpServiceManager*/
     sp<IServiceManager> sm = defaultServiceManager();
+    sp<IBinder> binder;
+	if(strcmp(argv[1], "hello") == 0 ) {
+		binder  = sm->getService(String16("hello"));
+			if(binder == 0)
+			{
+				 ALOGI("can not get hello service:\n");
+				 return -1;
+			}
 
-	sp<IBinder> binder
-		= sm->getService(String16("hello"));
-	if(binder == 0)
-	{
-		 ALOGI("can not get hello service:\n");
-		 return -1;
-	}
+			sp<IHelloService> service
+				= interface_cast<IHelloService>(binder);
 
-	sp<IHelloService> service
-		= interface_cast<IHelloService>(binder);
+			if(argc < 3) {
+				service->sayhello();
+				ALOGI("call  say_hello\n");
+			}
+			else {
+				cnt = service->sayhello_to(argv[2]);
+				ALOGI("call  say_hello_to cnt:%d\n",cnt);
+			}
+	} else {
+			binder  = sm->getService(String16("goodbye"));
+			if(binder == 0)
+			{
+				 ALOGI("can not get hello service:\n");
+				 return -1;
+			}
 
-	if(argc < 3) {
-		service->sayhello();
-		ALOGI("call  say_hello\n");
+			sp<IGoodByeService> service
+				= interface_cast<IGoodByeService>(binder);
+
+			if(argc < 3) {
+				service->saygoodbye();
+				ALOGI("call  say_hello\n");
+			}
+			else {
+				cnt = service->saygoodbye_to(argv[2]);
+				ALOGI("call  say_hello_to cnt:%d\n",cnt);
+			}
 	}
-	else {
-		cnt = service->sayhello_to(argv[2]);
-		ALOGI("call  say_hello_to cnt:%d\n",cnt);
-	}
+	
 	return 0;
 }
 

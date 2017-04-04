@@ -2,7 +2,7 @@
 /*参考：frameworks\av\mediaserver\Main_mediaserver.cpp*/
 
 
-#define LOG_TAG "HelloService"
+#define LOG_TAG "TestService"
 
 //#define LOG_NDEBUG 0
 
@@ -17,7 +17,7 @@
 
 
 #include "IHelloService.h"
-
+#include "IGoodByeService.h"
 using namespace android;
 
 int main(void)
@@ -31,7 +31,7 @@ int main(void)
     sp<IServiceManager> sm = defaultServiceManager();
     ALOGI("ServiceManager: %p", sm.get());
  	sm->addService(String16("hello"), new BnHelloService());
-
+	sm->addService(String16("goodbye"), new BnGoodByeService());
 	/*循环体*/
     ProcessState::self()->startThreadPool();
     IPCThreadState::self()->joinThreadPool();
