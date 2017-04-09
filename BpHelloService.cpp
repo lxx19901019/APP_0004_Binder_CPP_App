@@ -18,6 +18,7 @@ namespace  android {
 		{   
 			Parcel data,reply;
 			data.writeInt32(0);
+			data.writeString16(String16("IHelloService"));
 			
 
 	        remote()->transact(HELLO_SVR_CMD_SAYHELLO, data, &reply);	
@@ -27,6 +28,7 @@ namespace  android {
 		{
 			Parcel data,reply;
 			data.writeInt32(0);
+			data.writeString16(String16("IHelloService"));
 			data.writeString16(String16(name));
 	        remote()->transact(HELLO_SVR_CMD_SAYHELLO_TO, data, &reply);
 

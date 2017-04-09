@@ -22,6 +22,7 @@ namespace android {
 	        case HELLO_SVR_CMD_SAYHELLO_TO:{
 				/*data 取出参数*/
 				int32_t policy = data.readInt32();
+				String16 name16_tmp = data.readString16();
 				String16 name16 = data.readString16();
 				String8 name8(name16);
 				int cnt = sayhello_to(name8.string());
