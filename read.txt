@@ -1,0 +1,1 @@
+busybox mount -t nfs -o nolock,vers=2 192.168.1.123/work/nfs_root /mnt

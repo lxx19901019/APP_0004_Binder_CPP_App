@@ -27,7 +27,15 @@ namespace android {
 				String8 name8(name16);
 				int cnt = sayhello_to(name8.string());
 			 	/*把返回值写入reply传回去*/
+				reply->writeInt32(0);
 				reply->writeInt32(cnt);
+	            return NO_ERROR;
+	        } break;
+// android\base\jni\android_view_InputChannel.cpp
+		  case HELLO_SVR_CMD_GET_FD: {
+				int fd = this->fd;
+				reply->writeInt32(0);
+				reply->writeDupFileDescriptor( fd, true);
 	            return NO_ERROR;
 	        } break;
 	        default:
@@ -35,16 +43,31 @@ namespace android {
 	    }
 	}
 	void BnHelloService::sayhello(void) 
-    {
-    		static int cnt= 0;
-			ALOGI("say hello :%d\n",cnt++);
-    }
+	 {
+	    		static int cnt= 0;
+				ALOGI("say hello :%d\n",cnt++);
+	 }
 	 int BnHelloService::sayhello_to(const char *name)
 	 {
 	 	static int cnt= 0;
 		ALOGI( "say hello to %s :%d\n",name, cnt++);
 		return cnt;
 	 }
+	  int BnHelloService::get_fd(void)
+	 {
+		
+		return fd;
+	 }
+
+	  BnHelloService::BnHelloService()
+	  {
+	  
+	  }
+
+	   BnHelloService::BnHelloService(int fd)
+	  {
+	  	this->fd = fd;
+	  }
 }
 
 

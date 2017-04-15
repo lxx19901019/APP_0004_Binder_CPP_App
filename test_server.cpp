@@ -14,14 +14,21 @@
 #include <binder/IServiceManager.h>
 #include <cutils/properties.h>
 #include <utils/Log.h>
-
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "IHelloService.h"
 #include "IGoodByeService.h"
 using namespace android;
 
-int main(void)
+
+/*usage:test_server <file>*/
+int main(int argc, char *argv[])
 {
+	int fd;
+
+	if(argc == 2)
+		fd = open(argv[1], O_RDWR);
 	/* add service*/
 
 	/*while(1) {read date ,parse date, call func}*/
@@ -30,7 +37,7 @@ int main(void)
 	/*获得BpServiceManager*/
     sp<IServiceManager> sm = defaultServiceManager();
     ALOGI("ServiceManager: %p", sm.get());
- 	sm->addService(String16("hello"), new BnHelloService());
+ 	sm->addService(String16("hello"), new BnHelloService(fd));
 	sm->addService(String16("goodbye"), new BnGoodByeService());
 	/*循环体*/
     ProcessState::self()->startThreadPool();
